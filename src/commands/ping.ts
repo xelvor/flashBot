@@ -19,7 +19,7 @@ export default class adminrole extends Command {
             ],
             run: async (interaction: any, client: typeof bot) => {
                 const embed: EmbedBuilder = new EmbedBuilder()
-                .setDescription('Wczytywanie...')
+                .setDescription('Loading...')
                 .setColor(config.color as HexColorString)
                 .setFooter({
                     text: interaction.member.user.username,
