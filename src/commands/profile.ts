@@ -96,7 +96,6 @@ export default class adminrole extends Command {
                     }
                 })
 
-                console.log(badges)
 
 
                 const embed2: EmbedBuilder = new EmbedBuilder()
@@ -132,7 +131,7 @@ export default class adminrole extends Command {
                     value: `\`${nitro}\``
                 },
                 {
-                    name: "<:badges:1139228708989841458> Odznaki",
+                    name: "<:badges:1139228708989841458> Badges",
                     value: `${badges.map(x => `${x.icon} \`- ${x.name}\``).join('\n')}`
                 }
                 )

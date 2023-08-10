@@ -3,9 +3,7 @@ export interface Config {
     color: string,
     client_id: string,
     server_name: string,
-    db_conn_string: string,
-    db_user: string,
-    db_password: string
+    mongo_db: string
 }
 
 export interface Options {
