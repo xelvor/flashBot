@@ -2,7 +2,6 @@ import { init, loadEvents, loadCommand } from './base/Client';
 import { config } from './config';
 import express, { Request, Response } from 'express';
 import { GatewayIntentBits } from 'discord.js'
-import { createDBConnection } from './db';
 
 export const bot = init({
     intents: 3276799,

@@ -1,4 +1,4 @@
-import { ColorResolvable, Embed, EmbedBuilder, HexColorString, InteractionResponse } from 'discord.js';
+import { ColorResolvable, Embed, EmbedBuilder, HexColorString } from 'discord.js';
 import Command from '../base/Command';
 import { bot } from '../index'
 import { config } from '../config';
@@ -8,7 +8,7 @@ export default class adminrole extends Command {
     constructor() {
         super({
             name: 'ping',
-            description: 'Sprawdza ping bota',
+            description: 'Check ping of the bot',
             options: [
                 // {
                 //     name: 'kanal',

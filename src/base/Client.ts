@@ -22,15 +22,15 @@ export async function loadEvents(client: typeof bot, path: string) {
     }
 }
 
-export async function registerCommands(client: typeof bot) {
+export async function registerCommands(guild: string) {
     const rest = new REST({ version: '10' }).setToken(config.token);
     const data = await rest.put(
-        Routes.applicationGuildCommands(config.client_id, config.server_id),
+        Routes.applicationGuildCommands(config.client_id, guild),
         { body: commands },
     );
 }
 
-export async function loadCommand(client: typeof bot, path: string) {
+export async function loadCommand(client: any, path: string) {
     const eventFiles = readdirSync(path).filter(file => file.endsWith(".ts"));
     
     for (let file of eventFiles) {
@@ -38,5 +38,4 @@ export async function loadCommand(client: typeof bot, path: string) {
         const command = new cmd.default(client)
         commands.push(command.help)
     }
-    await registerCommands(client)
 }
