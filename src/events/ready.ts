@@ -1,15 +1,16 @@
 import Event from '../base/Event';
-import { Client, ActivityType } from 'discord.js';
+import { Client } from 'discord.js';
+import { setPresence } from '../utils/activity/main';
+
+
 export default class ready extends Event {
     constructor() {
         super({
             name: 'ready',
             run: async (client: Client) => {
                 console.log(`Logged as ${client.user.tag}`)
-
-                client.user.setPresence({
-                    activities: [{ name: `🖥️ `, type: ActivityType.Watching }]
-                });
+                setPresence(client)
+                setInterval(setPresence, 50000, client)
             }
         })
     }
