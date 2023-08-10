@@ -9,5 +9,4 @@ export interface Options {
     intents: number,
     token: string,
     config: Config,
-    api: any
 }

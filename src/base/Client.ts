@@ -3,28 +3,11 @@ import { Options } from '../interface/Client'
 import { readdirSync } from 'fs'
 import { bot, commands } from '../index'
 import { config } from '../config'
-import clnt from '../api/Client'
 
 export async function init(options: Options) {
     const client = new Client(options)
 
     client.login(options.token)
-
-    client.on('messageCreate', async (message: any) => {
-        if (message.channel.id === '1131539543661740052') {
-            try {
-                // const msg = message.content
-                const client = new clnt();
-                const result = await client.resources.resource.sendPremiumMessage(message.member.user.tag, message.content);
-            } catch (error) {
-                console.log('error ' + error)
-            }
-    
-        } else if (message.channel.id === '1128333805703401681') {
-            const client = new clnt();
-            const result = await client.resources.resource.sendAdminMessage(message.member.user.tag, message.content);
-        }
-    })
 
     return client
 }

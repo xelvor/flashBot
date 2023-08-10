@@ -1,7 +1,7 @@
 export const config = {
-    token: "MTA0MzExNTEwMDE2MjI0ODcwNA.Geayfo.qpRpTr5OptSWwhypN6k4v-a14wqN6rc-0NKxgI",
-    client_id: "1043115100162248704",
-    server_id: "1026433178551992381",
+    token: "MTAzNzc2OTQ2ODkwODE0NjcyMQ.GNd30j.j9Jld51drqjRIDvJtdqEpVdnNHRBr3FUg4moeU",
+    client_id: "1037769468908146721",
+    server_id: "1122947672765112361",
     color: "#2BA6FF",
     server_name: 'FlashBot'
 }
