@@ -10,6 +10,7 @@ export const bot = init({
 
 export const commands = []
 export const ownerCommands = []
+export const guildsInvites = []
 
 loadEvents(bot, './src/events')
 loadCommand(bot, './src/commands')
