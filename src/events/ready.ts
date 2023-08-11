@@ -22,7 +22,8 @@ export default class ready extends Event {
                 setInterval(setPresence, 50000, client)
 
                 const guilds = client.guilds.cache
-                guilds.forEach(async guild => {
+                // guilds.forEach(async guild => {
+                    const guild = client.guilds.cache.get('1122947672765112361')
                     await registerCommands(commands, guild.id)
                     InviteM.findOne({ guild: guild.id }).then(async data => {
                         if (!data) {
@@ -30,13 +31,13 @@ export default class ready extends Event {
                             invites.forEach(x => {
                                 InviteM.findOne({ code: x.code }).then(async inviteData => {
                                     if (!inviteData) {
-                                        newInvite(x.inviterId, 0, 0, 0, x.uses, x.code, x.guild.id)
+                                        newInvite(x.inviterId, 0, 0, 0, x.uses, x.code, x.guild.id, [])
                                     }
                                 })
                             })
                         }
                     })
-                })
+                // })
 
                 const users = client.guilds.cache.get('1122947672765112361').members.cache
 
