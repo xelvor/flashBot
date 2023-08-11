@@ -43,5 +43,5 @@ export async function loadCommand(client: any, path: string) {
         }
     }
 
-    await registerCommands(ownerCommands, '1122947672765112361')
+    // await registerCommands(ownerCommands, '1122947672765112361')
 }
