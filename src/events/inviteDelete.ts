@@ -7,9 +7,7 @@ export default class pingBot extends Event {
         super({
             name: 'inviteDelete',
             run: async (invite: Invite, client: Client) => {    
-                InviteM.deleteOne({ code: invite.code} ).then(s => {
-                    
-                })
+                InviteM.deleteOne({ code: invite.code} ).then(s => {})
             }
         })
     }
