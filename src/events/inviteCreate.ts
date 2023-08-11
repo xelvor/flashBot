@@ -7,7 +7,7 @@ export default class pingBot extends Event {
         super({
             name: 'inviteCreate',
             run: async (invite: Invite) => {    
-                newInvite(invite.inviterId, 0, 0, 0, 0, invite.code)
+                newInvite(invite.inviterId, 0, 0, 0, 0, invite.code, invite.guild.id)
             }
         })
     }

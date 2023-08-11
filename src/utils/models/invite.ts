@@ -8,6 +8,7 @@ const inviteSchema = new Schema<IInvite>({
     leaves: { type: Number, required: true },
     actuall: { type: Number, required: true },
     code: { type: String, required: true },
+    guild: { type: String, required: true },
 })
 
 export const InviteM = model<IInvite>('Invites', inviteSchema);

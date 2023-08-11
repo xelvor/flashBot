@@ -3,6 +3,7 @@ export interface IInvite {
     invites: number;
     fake: number;
     leaves: number;
-    actuall: number,
-    code: string
+    actuall: number;
+    code: string;
+    guild: string
 }
