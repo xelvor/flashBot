@@ -3,7 +3,8 @@ export interface Config {
     color: string,
     client_id: string,
     server_name: string,
-    mongo_db: string
+    mongo_db: string,
+    owner_role: string
 }
 
 export interface Options {
