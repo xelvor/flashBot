@@ -2,6 +2,7 @@ import { EmbedBuilder, HexColorString } from 'discord.js';
 import Command from '../base/Command';
 import { bot } from '../index'
 import { config } from '../config';
+import { badges } from '../utils/badges/main';
 
 export default class adminrole extends Command {
     constructor() {
@@ -23,8 +24,12 @@ export default class adminrole extends Command {
                     required: true,
                     choices: [
                         {
-                            name: 'sd',
-                            value: 'sdddd'
+                            name: 'Bot owner',
+                            value: 'owner'
+                        },
+                        {
+                            name: 'Bot staff',
+                            value: 'staff'
                         }
                     ]
                 }
