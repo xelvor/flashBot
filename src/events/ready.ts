@@ -30,7 +30,7 @@ export default class ready extends Event {
                             invites.forEach(x => {
                                 InviteM.findOne({ code: x.code }).then(async inviteData => {
                                     if (!inviteData) {
-                                        newInvite(x.inviterId, 0, 0, 0, 0, x.code, x.guild.id)
+                                        newInvite(x.inviterId, 0, 0, 0, x.uses, x.code, x.guild.id)
                                     }
                                 })
                             })

@@ -5,8 +5,8 @@ export default class guildMemberAdd extends Event {
     constructor() {
         super({
             name: 'guildMemberAdd',
-            run: async (member: GuildMember) => {
-                
+            run: async (member: any) => {
+                console.log(member)
             }
         })
     }
