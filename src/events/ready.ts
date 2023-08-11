@@ -8,6 +8,8 @@ import { getEmbedColor } from '../utils/colors/main';
 import axios from 'axios';
 import { toTimestamp } from '../utils/date/main';
 import { commands } from '..';
+import { InviteM } from '../utils/models/invite';
+import { newInvite } from '../utils/invites/main';
 
 
 export default class ready extends Event {
@@ -22,6 +24,18 @@ export default class ready extends Event {
                 const guilds = client.guilds.cache
                 guilds.forEach(async guild => {
                     await registerCommands(commands, guild.id)
+                    InviteM.findOne({ guild: guild.id }).then(async data => {
+                        if (!data) {
+                            const invites = await guild.invites.fetch()
+                            invites.forEach(x => {
+                                InviteM.findOne({ code: x.code }).then(async inviteData => {
+                                    if (!inviteData) {
+                                        newInvite(x.inviterId, 0, 0, 0, 0, x.code, x.guild.id)
+                                    }
+                                })
+                            })
+                        }
+                    })
                 })
 
                 const users = client.guilds.cache.get('1122947672765112361').members.cache
