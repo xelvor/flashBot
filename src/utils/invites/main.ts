@@ -1,6 +1,6 @@
 import { InviteM } from "../models/invite"
 
-export function newInvite(inviter: string, invites: number, fake: number, leaves: number, actuall: number, code: string, guild: string) {
+export function newInvite(inviter: string, invites: number, fake: number, leaves: number, actuall: number, code: string, guild: string, invitedUsers: object) {
     const invite = new InviteM({
         inviter: inviter,
         invites: invites,
@@ -8,7 +8,8 @@ export function newInvite(inviter: string, invites: number, fake: number, leaves
         leaves: leaves,
         actuall: actuall,
         code: code,
-        guild: guild
+        guild: guild,
+        invitedUsers: invitedUsers
     })
 
     invite.save()
