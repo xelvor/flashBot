@@ -1,3 +1,6 @@
+import { config } from "../../config";
+
+
 export function hexToRgb(hex: string) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result ? {
@@ -5,4 +8,8 @@ export function hexToRgb(hex: string) {
       g: parseInt(result[2], 16),
       b: parseInt(result[3], 16)
     } : null;
+}
+
+export function getEmbedColor() {
+  return [hexToRgb(config.color).r,hexToRgb(config.color).g,hexToRgb(config.color).b]
 }

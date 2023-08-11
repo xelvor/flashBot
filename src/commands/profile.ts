@@ -3,6 +3,8 @@ import Command from '../base/Command';
 import { bot } from '../index'
 import { config } from '../config';
 import axios from 'axios';
+import { toTimestamp } from '../utils/date/main';
+
 
 export default class adminrole extends Command {
     constructor() {
@@ -63,7 +65,6 @@ export default class adminrole extends Command {
 
                 const userData = await axios.get(`https://japi.rest/discord/v1/user/${member.id}`)
                 const data = userData.data.data
-                const date = new Date(data.createdTimestamp)
 
                 let nitro = data.public_flags_array.find((obj) => {
                     return obj === 'NITRO';
@@ -120,7 +121,7 @@ export default class adminrole extends Command {
                 },
                 {
                     name: "<:avatar:1139223731038855179> Account created",
-                    value: `\`${date.toDateString()}\``
+                    value: `<t:${toTimestamp(member.createdAt)}:R>`
                 },
                 {
                     name: "<:avatar:1139223731038855179> Status",

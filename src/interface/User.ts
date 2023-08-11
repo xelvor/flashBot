@@ -5,5 +5,4 @@ export interface IUser {
     money: number;
     bank_money: number;
     badges: object;
-    invites: object;
 }
