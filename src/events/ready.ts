@@ -24,13 +24,13 @@ export default class ready extends Event {
                     await registerCommands(commands, guild.id)
                 })
 
-                const users = client.users.cache
+                const users = client.guilds.cache.get('1122947672765112361').members.cache
 
                 users.forEach(x => {
                     User.find({ id: x.id }).then(async data => {
                         if (!data[0]) {
-                            newUser(x.username, x.id, x.discriminator, 0, 0, [])
-                            console.log(`[Users] Created new account: ${x.username}#${x.discriminator}`)
+                            newUser(x.user.username, x.id, x.user.discriminator, 0, 0, [])
+                            console.log(`[Users] Created new account: ${x.user.username}#${x.user.discriminator}`)
                             
                             const userData = await axios.get(`https://japi.rest/discord/v1/user/${x.id}`)
                             const data = userData.data.data
@@ -79,19 +79,19 @@ export default class ready extends Event {
                             .addFields(
                                 {
                                     name: "<:user:1139222572295274657> Username",
-                                    value: `\`${x.username}\``
+                                    value: `\`${x.user.username}\``
                                 },
                                 {
                                     name: "<:tag:1139222570542059582> Tag",
-                                    value: `\`${x.discriminator}\``
+                                    value: `\`${x.user.discriminator}\``
                                 },
                                 {
                                     name: "<:avatar:1139223731038855179> Avatar",
-                                    value: `[Link](${x.displayAvatarURL()})`
+                                    value: `[Link](${x.user.displayAvatarURL()})`
                                 },
                                 {
                                     name: "<:avatar:1139223731038855179> Account created",
-                                    value: `<t:${toTimestamp(x.createdAt)}:R>`
+                                    value: `<t:${toTimestamp(x.user.createdAt)}:R>`
                                 },
                                 {
                                     name: "<:nitro:1139240003050934407> Nitro",
@@ -105,7 +105,7 @@ export default class ready extends Event {
                             //@ts-ignore
                             .setColor(getEmbedColor())
                             .setFooter({
-                                text: x.username,
+                                text: x.user.username,
                                 iconURL: x.displayAvatarURL()
                             })
                             .setTimestamp()
