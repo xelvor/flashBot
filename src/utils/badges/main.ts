@@ -1,4 +1,4 @@
-export const badges: object = [
+export const badges = [
     {
         name: 'Bot owner',
         icon: '<:owner:1139452297450098820>',
@@ -10,3 +10,8 @@ export const badges: object = [
         value: 'staff'
     }
 ]
+
+export function getBadgeNameByValue(value: string) {
+    const badge = badges.find(b => b.value === value);
+    return badge ? badge.name : 'Unknown Badge';
+}
