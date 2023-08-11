@@ -4,7 +4,8 @@ import { bot } from '../index'
 import { config } from '../config';
 import axios from 'axios';
 import { toTimestamp } from '../utils/date/main';
-
+import { User } from '../utils/models/user';
+import { getBadgeIconByValue, getBadgeNameByValue } from '../utils/badges/main';
 
 export default class adminrole extends Command {
     constructor() {
@@ -78,6 +79,22 @@ export default class adminrole extends Command {
                 }
 
                 let badges = []
+
+                try {
+                    const user = await User.findOne({ id: member.id });
+                    if (user) {
+                        const userbadges = user.badges;
+                        // @ts-ignore
+                        for (let badge of userbadges) {
+                            badges.push({
+                                name: getBadgeNameByValue(badge.value),
+                                icon: getBadgeIconByValue(badge.value)
+                            });
+                        }
+                    }
+                } catch (error) {
+                    console.error(error);
+                }
 
                 data.public_flags_array.map(x => {
                     if (x == 'NITRO') {

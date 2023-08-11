@@ -15,3 +15,8 @@ export function getBadgeNameByValue(value: string) {
     const badge = badges.find(b => b.value === value);
     return badge ? badge.name : 'Unknown Badge';
 }
+
+export function getBadgeIconByValue(value: string) {
+    const badge = badges.find(b => b.value === value);
+    return badge ? badge.icon : 'Unknown Badge';
+}
