@@ -9,6 +9,7 @@ export default class adminrole extends Command {
         super({
             name: 'ping',
             description: 'Check ping of the bot',
+            owner: false,
             options: [
                 // {
                 //     name: 'kanal',

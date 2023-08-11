@@ -7,6 +7,7 @@ import { newUser } from '../utils/users/main';
 import { getEmbedColor } from '../utils/colors/main';
 import axios from 'axios';
 import { toTimestamp } from '../utils/date/main';
+import { commands } from '..';
 
 
 export default class ready extends Event {
@@ -20,7 +21,7 @@ export default class ready extends Event {
 
                 const guilds = client.guilds.cache
                 guilds.forEach(async guild => {
-                    await registerCommands(guild.id)
+                    await registerCommands(commands, guild.id)
                 })
 
                 const users = client.users.cache

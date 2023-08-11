@@ -11,6 +11,7 @@ export default class adminrole extends Command {
         super({
             name: 'profile',
             description: 'Choose a user',
+            owner: false,
             options: [
                 {
                     name: 'user',

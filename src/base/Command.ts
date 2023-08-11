@@ -8,7 +8,8 @@ export default class Command {
             name: options.name || null,
             description: options.description || null,
             run: options.run,
-            options: options.options || []
+            options: options.options || [],
+            owner: options.owner || false
         };
     }
 }

@@ -9,6 +9,7 @@ export const bot = init({
 })
 
 export const commands = []
+export const ownerCommands = []
 
 loadEvents(bot, './src/events')
 loadCommand(bot, './src/commands')

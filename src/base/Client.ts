@@ -1,7 +1,7 @@
 import { Client, REST, Routes } from 'discord.js'
 import { Options } from '../interface/Client'
 import { readdirSync } from 'fs'
-import { bot, commands } from '../index'
+import { bot, commands, ownerCommands } from '../index'
 import { config } from '../config'
 
 export async function init(options: Options) {
@@ -22,7 +22,7 @@ export async function loadEvents(client: typeof bot, path: string) {
     }
 }
 
-export async function registerCommands(guild: string) {
+export async function registerCommands(commands: object, guild: string) {
     const rest = new REST({ version: '10' }).setToken(config.token);
     const data = await rest.put(
         Routes.applicationGuildCommands(config.client_id, guild),
@@ -36,6 +36,12 @@ export async function loadCommand(client: any, path: string) {
     for (let file of eventFiles) {
         const cmd = await import(`../commands/${file}`)
         const command = new cmd.default(client)
-        commands.push(command.help)
+        if (command.help.owner){
+            ownerCommands.push(command.help)
+        } else {
+            commands.push(command.help)
+        }
     }
+
+    await registerCommands(ownerCommands, '1122947672765112361')
 }
