@@ -3,5 +3,6 @@ export const config = {
     client_id: "1037769468908146721",
     color: "#2BA6FF",
     server_name: 'FlashBot',
-    mongo_db: 'mongodb://localhost:27017'
+    mongo_db: 'mongodb://localhost:27017',
+    owner_role: '1122948803608199239'
 }
