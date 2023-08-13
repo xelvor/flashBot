@@ -19,7 +19,7 @@ export default class adminrole extends Command {
                 // }
             ],
             run: async (interaction: any, client: typeof bot) => {
-                (await client).emit('guildMemberRemove', interaction.member)
+                (await client).emit('guildMemberAdd', interaction.member)
                 interaction.reply('emited')
             }
         })

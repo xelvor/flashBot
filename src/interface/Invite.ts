@@ -6,5 +6,5 @@ export interface IInvite {
     actuall: number;
     code: string;
     guild: string;
-    invitedUseres: object;
+    invitedUsers: Array<object>;
 }

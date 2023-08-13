@@ -7,20 +7,15 @@ export default class GuildMemberRemoveEvent extends Event {
         super({
             name: 'guildMemberRemove',
             run: async (member: GuildMember) => {
+                const savedInvites = await InviteM.find({ guild: member.guild.id });
 
-                try {
-                    const savedInvites = await InviteM.find({ guild: member.guild.id });
-                    
-                    savedInvites.forEach(async (savedInvite) => {
-                        if (savedInvite.inviter === member.id) {
-                            savedInvite.actuall -= 1;
-                            savedInvite.leaves += 1;
-                            await savedInvite.save()
-                        }
-                    });
-                } catch (error) {
-                    console.error('Error processing guildMemberRemove event:', error);
-                }
+                savedInvites.forEach(async (s) => {
+                    //@ts-ignore
+                    s.invitedUsers = s.invitedUsers.filter((invite) => invite.id !== member.id);
+                    s.actuall -= 1;
+                    s.leaves += 1;
+                    await s.save();
+                });
             },
         });
     }

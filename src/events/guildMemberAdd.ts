@@ -11,17 +11,27 @@ export default class GuildMemberAddEvent extends Event {
                     const newInvites = await member.guild.invites.fetch();
                     
                     const savedInvites = await InviteM.find({ guild: member.guild.id });
+
                     
                     newInvites.forEach(async (newInvite) => {
                         const savedInvite = savedInvites.find(inv => inv.code === newInvite.code);
                         
                         if (savedInvite) {
                             const { uses: newUses } = newInvite;
-                            const { invites, fake, leaves, actuall } = savedInvite;
+                            const { invites, fake, leaves, actuall, invitedUsers } = savedInvite;
                             
                             if (newUses > invites) {
+                                //@ts-ignore
+                                console.log(member.user.tag)
+                                console.log(member.user.id)
+                                invitedUsers.push({
+                                    id: member.user.id,
+                                    guild: member.guild.id
+                                })
+                                
                                 savedInvite.invites = newUses;
                                 savedInvite.actuall += 1;
+
                                 
                                 await savedInvite.save();
                             }
