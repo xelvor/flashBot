@@ -4,9 +4,7 @@ import { bot } from '../index'
 import { config } from '../config';
 import axios from 'axios';
 import { toTimestamp } from '../utils/date/main';
-import { readdirSync } from 'fs';
 import os from 'os'; // Import modułu os
-import { resolve } from 'path'; // Importujemy moduł 'path' aby poprawnie ustalić ścieżkę
 
 export default class adminrole extends Command {
     constructor() {
@@ -33,16 +31,11 @@ export default class adminrole extends Command {
                     .setTimestamp();
                 await interaction.reply({ embeds: [embed] });
                 
-                let ping = Date.now() - interaction.createdTimestamp;
-                let botPing = Date.now();
                 const created = (await client).user.createdAt;
-                const cpuUsage = process.cpuUsage(); // Pobieramy informacje o użyciu procesora
+                const cpuUsage = process.cpuUsage(); 
                 const usedMemory = os.freemem() / 1024 / 1024;
                 const totalMemory = os.totalmem() / 1024 / 1024;
-                const userCPUUsage = (cpuUsage.user + cpuUsage.system) / 1000000; // W milisekundach
-                const totalCpuUsage = userCPUUsage / os.cpus().length; // Uśredniamy na wszystkich rdzeniach
-                await axios.get('https://google.com');
-                botPing = Date.now() - botPing;
+                const userCPUUsage = (cpuUsage.user + cpuUsage.system) / 1000000; 
 
                 const discordJsVersion = require('discord.js').version;
 
