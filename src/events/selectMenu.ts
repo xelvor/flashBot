@@ -1,6 +1,7 @@
 import { BaseInteraction, EmbedBuilder, HexColorString, ActionRowBuilder, StringSelectMenuBuilder, ChannelType, ButtonBuilder, ButtonStyle, Message } from 'discord.js';
 import Event from '../base/Event';
 import { config } from '../config';
+import { Guild } from '../utils/models/guild';
 
 export default class selectMenu extends Event {
     constructor() {
@@ -84,6 +85,17 @@ export default class selectMenu extends Event {
                             .setTimestamp();
 
                             await message.reply({ embeds: [embed], content: `<@${message.author.id}>` })
+
+                            Guild.findOne({ id: interaction.guild.id }).then(x => {
+                                const serverData = x.data
+                                serverData.push({
+                                    text: message.content,
+                                    type: 'invite-logger',
+                                    channelID: interaction.channel.id
+                                })
+
+                                x.save()
+                            })
                         })
                     })
                 }

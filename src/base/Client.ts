@@ -4,8 +4,10 @@ import { readdirSync } from 'fs'
 import { bot, commands, ownerCommands } from '../index'
 import { config } from '../config'
 
+export let client: Client;
+
 export async function init(options: Options) {
-    const client = new Client(options)
+    client = new Client(options)
 
     client.login(options.token)
 
