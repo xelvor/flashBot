@@ -2,6 +2,7 @@ import { BaseInteraction, EmbedBuilder, HexColorString, ActionRowBuilder, String
 import Event from '../base/Event';
 import { config } from '../config';
 import { Guild } from '../utils/models/guild';
+import { client } from '../base/Client';
 
 export default class selectMenu extends Event {
     constructor() {
@@ -76,7 +77,7 @@ export default class selectMenu extends Event {
                             const embed = new EmbedBuilder()
                             .setColor(config.color as HexColorString)
                             .setTitle('<a:tak:1043874690634096681> Success')
-                            .setDescription(`Succesly updated module: \`Invite Logger\`\n<:user:1139222572295274657> User: ${interaction.member.user}\n<:tag:1139222570542059582> Channel: ${interaction.channel}\n<:created:1140386863023149218> Message: \`${message.content}\`\n\n||Sended test message||`)
+                            .setDescription(`Succesly updated module: \`Invite Logger\`\n<:user:1139222572295274657> User: ${interaction.member.user}\n<:tag:1139222570542059582> Channel: ${client.channels.cache.get(id)}\n<:created:1140386863023149218> Message: \`${message.content}\`\n\n||Sended test message||`)
                             .setFooter({
                                 text: interaction.member.user.username,
                                 //@ts-ignore
@@ -86,15 +87,32 @@ export default class selectMenu extends Event {
 
                             await message.reply({ embeds: [embed], content: `<@${message.author.id}>` })
 
-                            Guild.findOne({ id: interaction.guild.id }).then(x => {
+                            Guild.findOne({ id: interaction.guild.id }).then(async x => {
                                 const serverData = x.data
-                                serverData.push({
-                                    text: message.content,
-                                    type: 'invite-logger',
-                                    channelID: interaction.channel.id
-                                })
+                                serverData.forEach(async data => {
+                                    //@ts-ignore
+                                    if (data.type == 'invite-logger') {
+                                        //@ts-ignore
+                                        data.text = message.content
+                                        //@ts-ignore
+                                        data.channelID = id
+                                    } else {
+                                        serverData.push({
+                                            text: message.content,
+                                            type: 'invite-logger',
+                                            channelID: id
+                                        })
+                                    }
 
-                                x.save()
+                                    x.markModified('data');
+                                    await x.save();
+
+                                    //@ts-ignore
+                                    client.emit('guildMemberAdd', interaction.member)
+
+                                    collector.stop()
+                                    messageCollector.stop()
+                                })
                             })
                         })
                     })
