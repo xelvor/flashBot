@@ -29,7 +29,6 @@ export default class GuildMemberAddEvent extends Event {
                                 savedInvite.invites = newUses;
                                 savedInvite.actuall += 1;
 
-                                
                                 await savedInvite.save();
                             }
                         }
