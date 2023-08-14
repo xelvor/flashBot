@@ -21,8 +21,6 @@ export default class GuildMemberAddEvent extends Event {
                             const { invites, fake, leaves, actuall, invitedUsers } = savedInvite;
                             
                             if (newUses > invites) {
-                                //@ts-ignore
-
                                 invitedUsers.push({
                                     id: member.user.id,
                                     guild: member.guild.id
