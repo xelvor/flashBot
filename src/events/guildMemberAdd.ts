@@ -18,7 +18,7 @@ export default class GuildMemberAddEvent extends Event {
                         
                         if (savedInvite) {
                             const { uses: newUses } = newInvite;
-                            const { invites, fake, leaves, actuall, invitedUsers } = savedInvite;
+                            const { invites, invitedUsers } = savedInvite;
                             
                             if (newUses > invites) {
                                 invitedUsers.push({
