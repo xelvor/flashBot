@@ -1,5 +1,5 @@
 import Event from '../base/Event';
-import { Client, EmbedBuilder } from 'discord.js';
+import { ChannelType, Client, EmbedBuilder } from 'discord.js';
 import { setPresence } from '../utils/activity/main';
 import { registerCommands } from '../base/Client';
 import { User } from '../utils/models/user';
@@ -10,6 +10,8 @@ import { toTimestamp } from '../utils/date/main';
 import { commands } from '..';
 import { InviteM } from '../utils/models/invite';
 import { newInvite } from '../utils/invites/main';
+import { Guild } from '../utils/models/guild';
+import { newGuild } from '../utils/guilds/main';
 
 
 export default class ready extends Event {
@@ -22,9 +24,36 @@ export default class ready extends Event {
                 setInterval(setPresence, 50000, client)
 
                 const guilds = client.guilds.cache
-                // guilds.forEach(async guild => {
-                    const guild = client.guilds.cache.get('1122947672765112361')
+                guilds.forEach(async guild => {
                     await registerCommands(commands, guild.id)
+                    Guild.findOne({ guild: guild.id }).then(async data => {
+                        if (!data) {
+                            const owner = await guild.fetchOwner();
+                            const channels = guild.channels.cache;
+                            let savedChannels = [];
+                            
+                            channels.forEach(channel => {
+                                if (channel.type == ChannelType.GuildText) {
+                                    savedChannels.push({
+                                        name: channel.name,
+                                        id: channel.id
+                                    });
+                                }
+                            });
+                            
+                            if (savedChannels.length > 0) {
+                                const firstChannel = savedChannels[0];
+                                const channelID = firstChannel.id;
+                                //@ts-ignore
+                                const serverInvite = await channels.get(channelID).createInvite();
+                            
+                                newGuild(guild.id, guild.name, [], owner.id, serverInvite)
+                            } else {
+                                console.log('No text channels found in the guild.');
+                            }
+
+                        }
+                    })
                     InviteM.findOne({ guild: guild.id }).then(async data => {
                         if (!data) {
                             const invites = await guild.invites.fetch()
@@ -37,7 +66,7 @@ export default class ready extends Event {
                             })
                         }
                     })
-                // })
+                })
 
                 const users = client.guilds.cache.get('1122947672765112361').members.cache
 
