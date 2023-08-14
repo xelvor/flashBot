@@ -22,8 +22,7 @@ export default class GuildMemberAddEvent extends Event {
                             
                             if (newUses > invites) {
                                 //@ts-ignore
-                                console.log(member.user.tag)
-                                console.log(member.user.id)
+
                                 invitedUsers.push({
                                     id: member.user.id,
                                     guild: member.guild.id
