@@ -34,6 +34,10 @@ export default class adminrole extends Command {
                             .setLabel('Invite logger')
                             .setDescription('Setup a invite logger.')
                             .setValue('invitelogger'),
+                            new StringSelectMenuOptionBuilder()
+                            .setLabel('Anty invite')
+                            .setDescription('Setup a Anty invite.')
+                            .setValue('antyinvite'),
                     )
                 )
 
