@@ -1,7 +1,7 @@
 import Event from '../base/Event';
 import { ChannelType, Client, EmbedBuilder } from 'discord.js';
 import { setPresence } from '../utils/activity/main';
-import { registerCommands } from '../base/Client';
+import { client, registerCommands } from '../base/Client';
 import { User } from '../utils/models/user';
 import { newUser } from '../utils/users/main';
 import { getEmbedColor } from '../utils/colors/main';
@@ -18,11 +18,10 @@ export default class ready extends Event {
     constructor() {
         super({
             name: 'ready',
-            run: async (client: Client) => {
+            run: async () => {
                 console.log(`Logged as ${client.user.tag}`)
                 setPresence(client)
                 setInterval(setPresence, 50000, client)
-
                 const guilds = client.guilds.cache
                 guilds.forEach(async guild => {
                     await registerCommands(commands, guild.id)

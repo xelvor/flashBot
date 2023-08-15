@@ -1,8 +1,7 @@
-import { ColorResolvable, Embed, EmbedBuilder, HexColorString } from 'discord.js';
+import { client } from '../base/Client';
 import Command from '../base/Command';
 import { bot } from '../index'
-import { config } from '../config';
-import axios from 'axios';
+import { getCountOfActualInvites } from '../utils/invites/main';
 
 export default class adminrole extends Command {
     constructor() {
@@ -18,9 +17,10 @@ export default class adminrole extends Command {
                 //     required: true
                 // }
             ],
-            run: async (interaction: any, client: typeof bot) => {
-                (await client).emit('guildMemberAdd', interaction.member)
+            run: async (interaction: any) => {
+                client.emit('guildMemberAdd', interaction.member)
                 interaction.reply('emited')
+                // console.log(await getCountOfActualInvites(interaction.guild, interaction.member))
             }
         })
     }
