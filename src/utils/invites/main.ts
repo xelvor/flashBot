@@ -1,3 +1,4 @@
+import { GuildMember } from "discord.js"
 import { InviteM } from "../models/invite"
 
 export function newInvite(inviter: string, invites: number, fake: number, leaves: number, actuall: number, code: string, guild: string, invitedUsers: object) {
@@ -13,4 +14,9 @@ export function newInvite(inviter: string, invites: number, fake: number, leaves
     })
 
     invite.save()
+}
+
+export function getCountOfActualInvites(user: GuildMember) {
+    let invites: number = 0;
+    return invites
 }
