@@ -49,6 +49,8 @@ export default class PollSystem extends Event {
                                                 }
                                             }
 
+                                            
+
                                             //@ts-ignore
                                             option.count = option.count + 1
                                             //@ts-ignore
@@ -74,6 +76,7 @@ export default class PollSystem extends Event {
                                                 //@ts-ignore
                                                 components: [row]
                                             })
+                                            
                                             await interaction.reply({
                                                 content: "asd",
                                                 ephemeral: true
