@@ -16,7 +16,8 @@ export default class adminrole extends Command {
                     name: 'count',
                     description: 'Enter a count of messages',
                     type: 10,
-                    required: true
+                    required: true,
+                    min_value: 2
                 }
             ],
             run: async (interaction: any) => {
@@ -111,6 +112,7 @@ export default class adminrole extends Command {
                                         }
                                     )
                                     .setTimestamp()
+                                    collector.stop()
                                     return await interaction.channel.send({embeds: [embed2]})
                                 }
 
@@ -137,6 +139,7 @@ export default class adminrole extends Command {
                                         }
                                     )
                                     .setTimestamp()
+                                    collector.stop()
                                     return await interaction.channel.send({embeds: [embed2]})
                                 }
                             }
