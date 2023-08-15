@@ -143,7 +143,7 @@ export default class adminrole extends Command {
                 },
                 {
                     name: "<:avatar:1139223731038855179> Status",
-                    value: `\`${presence}\``
+                    value: `\`None\``
                 },
                 {
                     name: "<:nitro:1139240003050934407> Nitro",
@@ -151,7 +151,7 @@ export default class adminrole extends Command {
                 },
                 {
                     name: "<:badges:1139228708989841458> Badges",
-                    value: `${badges.map(x => `${x.icon} \`- ${x.name}\``).join('\n')}`
+                    value: badges.length > 0 ? badges.map(x => `${x.icon} \`- ${x.name}\``).join('\n') : "\`None\`"
                 }
                 )
                 .setTimestamp()
