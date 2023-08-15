@@ -1,8 +1,7 @@
-import { EmbedBuilder, HexColorString, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder } from 'discord.js';
+import { EmbedBuilder, HexColorString, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, PermissionFlagsBits } from 'discord.js';
 import Command from '../base/Command';
-import { bot } from '../index'
-import { config } from '../config';
-
+import { isPlayerHavePermissions } from '../utils/permissions/main';
+import { client } from '../base/Client';
 
 export default class adminrole extends Command {
     constructor() {
@@ -11,8 +10,19 @@ export default class adminrole extends Command {
             description: 'Setup a server',
             owner: false,
             options: [],
-            run: async (interaction: any, client: typeof bot) => {
-
+            run: async (interaction: any) => {
+                if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
+                    const embed: EmbedBuilder = new EmbedBuilder()
+                    .setTitle('<a:nie:1043874712155070504> Error')
+                    .setColor('Red')
+                    .setDescription('You do not have permission to use this command')
+                    .setTimestamp()
+                    .setFooter({
+                        text: interaction.member.user.username,
+                        iconURL: interaction.member.user.avatarURL()
+                    })
+                    return await interaction.reply({ embeds: [embed] })
+                }
 
                 const component = new ActionRowBuilder()
                 .addComponents(
