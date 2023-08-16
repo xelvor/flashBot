@@ -1,5 +1,5 @@
 import Event from '../base/Event';
-import { ChannelType, Client, EmbedBuilder } from 'discord.js';
+import { ChannelType, Client, EmbedBuilder, TextChannel } from 'discord.js';
 import { setPresence } from '../utils/activity/main';
 import { client, registerCommands } from '../base/Client';
 import { User } from '../utils/models/user';
@@ -66,8 +66,40 @@ export default class ready extends Event {
                         }
                     })
                 })
+                
 
                 const users = client.guilds.cache.get('1122947672765112361').members.cache
+                
+                try {
+                    guilds.forEach(async guild => {
+                        const channels = await  guild.channels.fetch()
+                        channels.forEach(async channel => {
+                            if (channel.type == ChannelType.GuildText) {
+                                const textChannel = channel as TextChannel;
+                                const messages = await textChannel.messages.fetch();
+                                messages.forEach(async message => {
+                                    if (message.embeds.length > 0) {
+                                        const embed = message.embeds[0]
+                                        if (embed) {
+                                            if (embed.description?.includes('Started playing music')) {
+                                                const newEmbed = new EmbedBuilder()
+                                                .setDescription('\`Bot has been restarted\`')
+                                                .setTitle(embed.title)
+                                                .setColor(embed.color)
+                                                .setTimestamp(toTimestamp(embed.timestamp))
+                                                // .setImage(embed.image.url)
+                                                await message.edit({ embeds: [newEmbed], components: [] })
+                                            }
+                                        }
+                                    }
+                                })
+                            }
+                        })
+                    })
+                  } catch (error) {
+                    console.error('Error:', error);
+                  }
+                
 
                 users.forEach(x => {
                     User.find({ id: x.id }).then(async data => {
