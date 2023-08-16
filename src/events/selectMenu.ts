@@ -50,8 +50,8 @@ export default class selectMenu extends Event {
                         const embed = new EmbedBuilder()
                             .setTitle('Set message')
                             .setDescription(`
-                            Example: \`{username joined for the server, have {invites} invites}\`
-                            Format: \`{username}, {invites}\`
+                            Example: \`{username} joined for the server, invited by: {inviter} he have {invites} invites\`
+                            Format: \`{username}, {invites}, {inviter}\`
                             
                             Send message on the this channel
                             `)
@@ -116,6 +116,8 @@ export default class selectMenu extends Event {
                             })
                         })
                     })
+                } else if (interaction.values[0] == 'antyinvite') {
+
                 }
             }
         })
