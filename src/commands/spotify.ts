@@ -29,6 +29,7 @@ export default class adminrole extends Command {
                     spotify.build().then(async data => {
                         const attachment = new AttachmentBuilder(data)
                         .setName('spotify-iq65_.png')
+                        
                         await interaction.reply({
                             files: [attachment]
                         })
