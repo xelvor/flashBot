@@ -11,6 +11,7 @@ export const bot = init({
 export const commands = []
 export const ownerCommands = []
 export const guildsInvites = []
+export const music: Array<object> = []
 
 loadEvents(bot, './src/events')
 loadCommand(bot, './src/commands')
