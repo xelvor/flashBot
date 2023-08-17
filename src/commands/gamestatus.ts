@@ -278,7 +278,7 @@ export default class adminrole extends Command {
                         }
                     })
                 } catch (e) {
-                    console.log(e)
+                    console.log(`[GameStatus-Command] Error`)
                     const embed: EmbedBuilder = new EmbedBuilder()
                     .setTitle('<a:nie:1043874712155070504> Error')
                     .setDescription(`I'm sorry, but I'm currently unable to fetch information about the game server's status. This could be due to technical issues or the server's unavailability. Please try again later or reach out to the game server's administration for more information.`)
