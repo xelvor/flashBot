@@ -13,26 +13,64 @@ export default class adminrole extends Command {
             owner: false,
             options: [
                 {
-                    name: 'name',
-                    description: 'Enter the video name',
-                    type: 3,
-                    required: true
+                    name: 'youtube',
+                    description: 'search in youtube',
+                    type: 1,
+                    options: [
+                        {
+                            name: "video",
+                            description: "Enter the video name",
+                            type: 3,
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    name: 'spotify',
+                    description: 'Bot play a music from your status',
+                    type: 1,
                 }
             ],
             run: async (interaction: any) => {
-                //@ts-ignore
-                const link = interaction.options.getString('name')
+                
+                let link: string;
 
+                const subcommand = interaction.options.getSubcommand();
                 const embed: EmbedBuilder = new EmbedBuilder()
                 .setDescription('Loading...')
                 .setColor(config.color as HexColorString)
                 .setFooter({
                     text: interaction.member.user.username,
-                    //@ts-ignore
                     iconURL: interaction.member.user.avatarURL()
                 })
                 .setTimestamp()
                 await interaction.reply({ embeds: [embed] })
+
+                switch (subcommand) {
+                    case 'youtube':
+                        link = interaction.options.getString('video')
+                    break
+                    case 'spotify':
+                        let activities = interaction.member?.presence?.activities || [];
+                
+                        let activity = activities.find(e => e.name == 'Spotify');
+        
+                        if (activity) {
+                            link = `${activity.state} - ${activity.details}`
+                        } else {
+                            const embed: EmbedBuilder = new EmbedBuilder()
+                            .setTitle('<a:nie:1043874712155070504> Error')
+                            .setDescription(`No Spotify activity at the moment. Feel free to play some tunes and let the music flow!`)
+                            .setColor('Red')
+                            .setFooter({
+                                text: interaction.member.user.username,
+                                iconURL: interaction.member.user.avatarURL()
+                            })
+                            .setTimestamp()
+                            await interaction.editReply({embeds: [embed]})
+                        }
+                    break
+                }
 
                 //@ts-ignore
                 const memberVoiceChannel = interaction.member?.voice.channel;
@@ -90,6 +128,8 @@ export default class adminrole extends Command {
                                   })
                                   .setTimestamp()
                                   await interaction.editReply({ embeds: [embed], components: [] })
+                                  connection.disconnect()
+                                  connection.destroy()
                                 });
         
                                 const embed = new EmbedBuilder()
