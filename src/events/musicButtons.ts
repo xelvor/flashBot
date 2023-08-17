@@ -3,7 +3,7 @@ import Event from '../base/Event';
 import { music } from '..';
 import { config } from '../config';
 import { exportInteraction, nextQueue } from '../commands/play';
-import lyricsFinder from 'lyrics-finder'
+import { getLyrics, getSong } from 'genius-lyrics-api';
 
 export default class musicButtons extends Event {
     constructor() {
@@ -31,26 +31,52 @@ export default class musicButtons extends Event {
                 } else if (interaction.customId == 'skip') {
                     interaction.reply('xdd')
                 } else if (interaction.customId == 'lyrics') {
-                    console.log(await lyricsFinder(music[interaction.guild.id][0].title))
-                    // const embed: EmbedBuilder = new EmbedBuilder()
-                    // .setTitle(`${music[interaction.guild.id][0].title} Lyrics`)
-                    // .setDescription(text.lyrics)
-                    // .setColor(config.color as HexColorString)
-                    // .setFooter({
-                    //     text: interaction.member.user.username,
-                    //     //@ts-ignore
-                    //     iconURL: interaction.member.user.avatarURL()
-                    // })
-                    // .setTimestamp()
-                    // const button = new ActionRowBuilder()
-                    // .addComponents(
-                    //     new ButtonBuilder()
-                    //     .setURL(text.source.link)
-                    //     .setLabel(text.source.name)
-                    //     .setStyle(ButtonStyle.Link)
-                    // )
-                    // //@ts-ignore
-                    // await interaction.reply({ embeds: [embed], components: [button] })
+                    const musicData = music[interaction.guild.id]?.[0]; 
+                    if (musicData) {
+                        const title = musicData.title;
+                        const separatorIndex = title.indexOf('-'); 
+                        
+                        if (separatorIndex !== -1) { 
+                            const trimmedTitle = title.substring(0, separatorIndex).trim(); 
+                            const artist = title.substring(separatorIndex + 1).trim(); 
+                            
+                            const options = {
+                                apiKey: '4tj86koeAYnCydnAvCFI8JrrMKwKNfmOXkLGdSQ2d4-gRn9WqayZGsh3yEEsd8er',
+                                title: trimmedTitle,
+                                artist: artist, 
+                                optimizeQuery: true
+                            };
+                            
+                            getSong(options).then((song) => {  
+                                //const maxChars = 1999;
+                                //const lyrics = song.lyrics;
+                                //
+                                //let lyricsToSend = lyrics;
+                                //if (lyrics.length > maxChars) {
+                                //    lyricsToSend = lyrics.substring(0, maxChars);
+                                //}
+                                console.log(song)
+                                const embed: EmbedBuilder = new EmbedBuilder()
+                                    .setTitle(`<:musical:1141482466050314310> ${trimmedTitle} - ${artist}`)
+                                    .setDescription(`\`${song.lyrics}\``)
+                                    .addFields(
+                                        {
+                                            name: '<:link:1139222567933190247> Link to lirycs',
+                                            value: `\`${song.url}\``
+                                        }
+                                    )
+                                    .setColor(config.color as HexColorString)
+                                    .setFooter({
+                                        text: interaction.member.user.username,
+                                        //@ts-ignore
+                                        iconURL: interaction.member.user.avatarURL()
+                                    })
+                                    .setTimestamp()
+                            
+                                interaction.reply({ embeds: [embed] });
+                            });
+                        }
+                    }
                 }
             }
         })
