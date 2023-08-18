@@ -126,29 +126,7 @@ export async function nextQueue(songData: Array<object>, channel: GuildChannel, 
         )
         //@ts-ignore
         await interaction.editReply({ embeds: [embed], components: [button] })
-        
-        // const collector = interaction.channel.createMessageComponentCollector({
-        //     filter: (i) => i.user.id === interaction.member.user.id,
-        //     time: 60000
-        // });
-    
-        // collector.on('collect', async(i) => {
-        //     if (i.customId == 'stop') {
-                // connection.disconnect();
-                // const embed: EmbedBuilder = new EmbedBuilder()
-                // .setTitle(video.title)
-                // .setDescription('Music has been stopped')
-                // .setColor(config.color as HexColorString)
-                // .setFooter({
-                //     text: interaction.member.user.username,
-                //     //@ts-ignore
-                //     iconURL: interaction.member.user.avatarURL()
-                // })
-                // .setTimestamp()
-                // await interaction.editReply({ embeds: [embed], components: [] })
-    
-        //     }
-        // })
+
     } catch (error) {
         console.error(error);
         const embed: EmbedBuilder = new EmbedBuilder()

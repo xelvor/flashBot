@@ -4,6 +4,7 @@ import { music } from '..';
 import { config } from '../config';
 import { exportInteraction, nextQueue } from '../commands/play';
 import { getLyrics, getSong } from 'genius-lyrics-api';
+import  ytSearch from 'yt-search'
 
 export default class musicButtons extends Event {
     constructor() {
@@ -29,7 +30,19 @@ export default class musicButtons extends Event {
                     await exportInteraction.editReply({ embeds: [embed], components: [] })
                     music[interaction.guild.id].shift()
                 } else if (interaction.customId == 'skip') {
-                    interaction.reply('xdd')
+                    const songs = music[interaction.guild.id];
+                    const videoFinder = async (query) => {
+                        const videoResult = await ytSearch(query);
+                        return videoResult.videos.length > 1 ? videoResult.videos[0] : null;
+                    };
+                    if (songs.length > 1) {
+                        const video = await videoFinder(songs[0].title);
+                        if (video) {
+                            music[interaction.guild.id].shift()
+                            //@ts-ignore
+                            nextQueue(songs, interaction.channel, video, interaction.member.voice.channel, interaction)
+                        }
+                    }
                 } else if (interaction.customId == 'lyrics') {
                     const musicData = music[interaction.guild.id]?.[0]; 
                     if (musicData) {
