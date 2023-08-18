@@ -47,36 +47,71 @@ export default class musicButtons extends Event {
                                 optimizeQuery: true
                             };
                             
-                            getSong(options).then((song) => {  
-                                //const maxChars = 1999;
-                                //const lyrics = song.lyrics;
-                                //
-                                //let lyricsToSend = lyrics;
-                                //if (lyrics.length > maxChars) {
-                                //    lyricsToSend = lyrics.substring(0, maxChars);
-                                //}
-                                console.log(song)
-                                const embed: EmbedBuilder = new EmbedBuilder()
-                                    .setTitle(`<:musical:1141482466050314310> ${trimmedTitle} - ${artist}`)
-                                    .setDescription(`\`${song.lyrics}\``)
-                                    .addFields(
-                                        {
-                                            name: '<:link:1139222567933190247> Link to lirycs',
-                                            value: `\`${song.url}\``
-                                        }
-                                    )
-                                    .setColor(config.color as HexColorString)
-                                    .setFooter({
-                                        text: interaction.member.user.username,
+                            try {
+                                getSong(options).then((song) => {  
+                                    if (song) {
+                                        const embed: EmbedBuilder = new EmbedBuilder()
+                                        .setTitle(`<:musical:1141482466050314310> ${trimmedTitle} - ${artist}`)
+                                        .setDescription(`\`${song.lyrics}\``)
+                                        .setColor(config.color as HexColorString)
+                                        .setFooter({
+                                            text: interaction.member.user.username,
+                                            //@ts-ignore
+                                            iconURL: interaction.member.user.avatarURL()
+                                        })
+                                        .setTimestamp()
+                                        const button = new ActionRowBuilder()
+                                        .addComponents(
+                                            new ButtonBuilder()
+                                            .setURL(song.url)
+                                            .setLabel("Link to lirycs")
+                                            .setStyle(ButtonStyle.Link)
+                                        )
                                         //@ts-ignore
-                                        iconURL: interaction.member.user.avatarURL()
-                                    })
-                                    .setTimestamp()
-                            
-                                interaction.reply({ embeds: [embed] });
-                            });
+                                        interaction.reply({ embeds: [embed], components: [button], ephemeral: true });
+                                    } else {
+                                        const embed: EmbedBuilder = new EmbedBuilder()
+                                        .setTitle('<a:nie:1043874712155070504> Error')
+                                        .setColor('Red')
+                                        .setDescription('Not found lyrics')
+                                        .setTimestamp()
+                                        .setFooter({
+                                            text: interaction.member.user.username,
+                                            //@ts-ignore
+                                            iconURL: interaction.member.user.avatarURL()
+                                        })
+                                        return interaction.reply({ embeds: [embed] })
+                                    }
+                                });
+                            } catch(e) {
+                                console.log(`musicButton tekst chwyto cwela wyjebal blad`)
+                                const embed: EmbedBuilder = new EmbedBuilder()
+                                .setTitle('<a:nie:1043874712155070504> Error')
+                                .setColor('Red')
+                                .setDescription('Error')
+                                .setTimestamp()
+                                .setFooter({
+                                    text: interaction.member.user.username,
+                                    //@ts-ignore
+                                    iconURL: interaction.member.user.avatarURL()
+                                })
+                                return interaction.reply({ embeds: [embed] })
+                            }
                         }
                     }
+                } else if (interaction.customId == 'queue') {
+                    const queue = music[interaction.guild.id]
+                    const embed: EmbedBuilder = new EmbedBuilder()
+                    .setTitle(`Queue`)
+                    .setDescription(queue.map(x => `<:user:1139222572295274657> User:\n<@${x.added}>\n<:musical:1141482466050314310> Title:\n\`${x.title}\`\n<:link:1139222567933190247> Link:\n[Link](${x.link})`).join('\n\n'))
+                    .setColor(config.color as HexColorString)
+                    .setFooter({
+                        text: interaction.member.user.username,
+                        //@ts-ignore
+                        iconURL: interaction.member.user.avatarURL()
+                    })
+                    .setTimestamp()
+                    interaction.reply({ embeds: [embed], ephemeral: true });
                 }
             }
         })
