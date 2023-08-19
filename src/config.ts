@@ -4,5 +4,6 @@ export const config = {
     color: "#2BA6FF",
     server_name: 'Greet',
     mongo_db: 'mongodb://localhost:27017',
-    owner_role: '1122948803608199239'
+    owner_role: '1122948803608199239',
+    prefix: '!'
 }
