@@ -22,7 +22,7 @@ export default class adminrole extends Command {
                     .setStartTimestamp(activity.timestamps.start)
                     .setEndTimestamp(activity.timestamps.end)
                     .setBackground('COLOR', '#292929')
-                    .setProgressBar('BAR','#96D3FF')
+                    // .setProgressBar('BAR','#96D3FF')
                     .setImage(`https://i.scdn.co/image/${activity.assets.largeImage.slice(8)}`)
                     .setTitle(activity.details)
     
