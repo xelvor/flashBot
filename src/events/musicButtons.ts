@@ -35,13 +35,43 @@ export default class musicButtons extends Event {
                         const videoResult = await ytSearch(query);
                         return videoResult.videos.length > 1 ? videoResult.videos[0] : null;
                     };
+
                     if (songs.length > 1) {
-                        const video = await videoFinder(songs[0].title);
-                        if (video) {
                             music[interaction.guild.id].shift()
+                            const video = await videoFinder(songs[0].title);
+                            if (video) {
+                            connection.disconnect()
+                            connection.destroy()
                             //@ts-ignore
-                            nextQueue(songs, interaction.channel, video, interaction.member.voice.channel, interaction)
+                            await nextQueue(songs, interaction.channel, video, interaction.member.voice.channel, exportInteraction)
+                            await interaction.reply({
+                                content: 'Song has been skipped',
+                            })
+                        } else {
+                            const embed: EmbedBuilder = new EmbedBuilder()
+                            .setTitle('<a:nie:1043874712155070504> Error')
+                            .setDescription('No songs in queue')
+                            .setColor('Red')
+                            .setTimestamp()
+                            .setFooter({
+                                text: interaction.member.user.username,
+                                //@ts-ignore
+                                iconURL: interaction.member.user.avatarURL()
+                            })
+                            await interaction.reply({ embeds: [embed], components: [] })
                         }
+                    } else {
+                        const embed: EmbedBuilder = new EmbedBuilder()
+                        .setTitle('<a:nie:1043874712155070504> Error')
+                        .setDescription('No songs in queue')
+                        .setColor('Red')
+                        .setTimestamp()
+                        .setFooter({
+                            text: interaction.member.user.username,
+                            //@ts-ignore
+                            iconURL: interaction.member.user.avatarURL()
+                        })
+                        await exportInteraction.editReply({ embeds: [embed], components: [] })
                     }
                 } else if (interaction.customId == 'lyrics') {
                     const musicData = music[interaction.guild.id]?.[0]; 
