@@ -1,7 +1,7 @@
 import { Client, REST, Routes } from 'discord.js'
 import { Options } from '../interface/Client'
 import { readdirSync } from 'fs'
-import { bot, commands, ownerCommands } from '../index'
+import { bot, commands, ownerCommands, nCommands } from '../index'
 import { config } from '../config'
 
 export let client: Client;
@@ -46,4 +46,14 @@ export async function loadCommand(client: any, path: string) {
     }
 
     // await registerCommands(ownerCommands, '1122947672765112361')
+}
+
+export async function loadNCommand(client: any, path: string) {
+    const eventFiles = readdirSync(path).filter(file => file.endsWith(".ts"));
+    
+    for (let file of eventFiles) {
+        const cmd = await import(`../normalCommands/${file}`)
+        const command = new cmd.default(client)
+        nCommands.push(command.help)
+    }
 }
