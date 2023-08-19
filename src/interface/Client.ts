@@ -4,7 +4,8 @@ export interface Config {
     client_id: string,
     server_name: string,
     mongo_db: string,
-    owner_role: string
+    owner_role: string,
+    prefix: string;
 }
 
 export interface Options {
