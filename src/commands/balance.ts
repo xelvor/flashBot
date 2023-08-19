@@ -4,6 +4,7 @@ import { config } from '../config';
 import { User } from '../utils/models/user';
 import { isPlayerHaveOwnerPermission } from '../utils/permissions/main';
 import { client } from '../base/Client';
+import { addCommas } from '../utils/money/commas';
 
 export default class adminrole extends Command {
     constructor() {
@@ -109,7 +110,7 @@ export default class adminrole extends Command {
                         .addFields(
                             { name: '<:user:1139222572295274657> Moderator', value: `<@${interaction.member.user.id}>` },
                             { name: '<:user:1139222572295274657> User', value: `<@${member.id}>` },
-                            { name: '<:cpu:1140390874732306584> Amount', value: `\`${amount}\`` }
+                            { name: '<:cpu:1140390874732306584> Amount', value: `\`${addCommas(amount)}\`` }
                         )
                         .setTimestamp()
                         .setFooter({

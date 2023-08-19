@@ -2,6 +2,7 @@ import { EmbedBuilder, HexColorString } from 'discord.js';
 import Command from '../base/Command';
 import { config } from '../config';
 import { User } from '../utils/models/user';
+import { addCommas } from '../utils/money/commas';
 
 export default class adminrole extends Command {
     constructor() {
@@ -27,8 +28,8 @@ export default class adminrole extends Command {
                         .setTitle('Economy')
                         .addFields(
                             { name: '<:user:1139222572295274657> User', value: `<@${interaction.member.id}>` },
-                            { name: '<:cpu:1140390874732306584> Money', value: `\`$${user.money}\`` },
-                            { name: '<:cpu:1140390874732306584> Bank money', value: `\`$${user.bank_money}\`` }
+                            { name: '<:cpu:1140390874732306584> Money', value: `\`$${addCommas(user.money)}\`` },
+                            { name: '<:cpu:1140390874732306584> Bank money', value: `\`$${addCommas(user.bank_money)}\`` }
                         )
                         .setColor(config.color as HexColorString)
                         .setTimestamp()
