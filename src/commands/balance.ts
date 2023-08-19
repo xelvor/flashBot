@@ -2,6 +2,8 @@ import { EmbedBuilder, HexColorString } from 'discord.js';
 import Command from '../base/Command';
 import { config } from '../config';
 import { User } from '../utils/models/user';
+import { isPlayerHaveOwnerPermission } from '../utils/permissions/main';
+import { client } from '../base/Client';
 
 export default class adminrole extends Command {
     constructor() {
@@ -56,6 +58,18 @@ export default class adminrole extends Command {
                 }
             ],
             run: async (interaction: any) => {
+                if (! await isPlayerHaveOwnerPermission(client, interaction.member.id)) {
+                    const embed = new EmbedBuilder()
+                    .setTitle('<a:nie:1043874712155070504> Error')
+                    .setColor('Red')
+                    .setDescription('You dont have permission')
+                    .setTimestamp()
+                    .setFooter({
+                        text: interaction.member.user.username,
+                        iconURL: interaction.member.user.avatarURL()
+                    })
+                    return await interaction.reply({ embeds: [embed] })
+                }
                 const member = interaction.options.getUser('user')
                 const type = interaction.options.getString('type')
                 const amount = interaction.options.getNumber('amount')
