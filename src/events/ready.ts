@@ -25,8 +25,10 @@ export default class ready extends Event {
                 const guilds = client.guilds.cache
                 guilds.forEach(async guild => {
                     await registerCommands(commands, guild.id)
-                    Guild.findOne({ guild: guild.id }).then(async data => {
-                        if (!data) {
+ 
+                    try {
+                        const data = await Guild.findOne({ id: guild.id })
+                        if (data == null) {
                             const owner = await guild.fetchOwner();
                             const channels = guild.channels.cache;
                             let savedChannels = [];
@@ -50,9 +52,10 @@ export default class ready extends Event {
                             } else {
                                 console.log('No text channels found in the guild.');
                             }
-
                         }
-                    })
+                    } catch (error) {
+                        console.error('Error:', error);
+                    }
                     InviteM.findOne({ guild: guild.id }).then(async data => {
                         if (!data) {
                             const invites = await guild.invites.fetch()
@@ -66,7 +69,6 @@ export default class ready extends Event {
                         }
                     })
                 })
-                
 
                 const users = client.guilds.cache.get('1122947672765112361').members.cache
                 
