@@ -12,10 +12,10 @@ export default class musicButtons extends Event {
             name: 'interactionCreate',
             run: async (interaction: ButtonInteraction) => { 
                 if (!interaction.isButton()) return;
-                const connection = music[interaction.guild.id].connection
-                if (!connection) return;
 
                 if (interaction.customId == 'stop') {
+                    const connection = music[interaction.guild.id].connection
+                    if (!connection) return;
                     connection.disconnect();
                     const embed: EmbedBuilder = new EmbedBuilder()
                     .setTitle(music[interaction.guild.id][0].title)
@@ -30,6 +30,8 @@ export default class musicButtons extends Event {
                     await exportInteraction.editReply({ embeds: [embed], components: [] })
                     music[interaction.guild.id].shift()
                 } else if (interaction.customId == 'skip') {
+                    const connection = music[interaction.guild.id].connection
+                    if (!connection) return;
                     const songs = music[interaction.guild.id];
                     const videoFinder = async (query) => {
                         const videoResult = await ytSearch(query);
