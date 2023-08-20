@@ -1,4 +1,4 @@
-import { ColorResolvable, Embed, EmbedBuilder, GuildBanManager, HexColorString } from 'discord.js';
+import { ColorResolvable, Embed, EmbedBuilder, GuildBanManager, HexColorString, PermissionFlagsBits } from 'discord.js';
 import Command from '../base/Command';
 import { bot } from '../index'
 import { config } from '../config';
@@ -28,6 +28,19 @@ export default class adminrole extends Command {
                 })
                 .setTimestamp()
                 await interaction.reply({ embeds: [embed] })
+
+                if (!interaction.member.permissions.has(PermissionFlagsBits.BanMembers)) {
+                    const embed: EmbedBuilder = new EmbedBuilder()
+                    .setTitle('<a:nie:1043874712155070504> Error')
+                    .setDescription(`You don't have permission`)
+                    .setColor('Red')
+                    .setTimestamp()
+                    .setFooter({
+                        text: interaction.member.user.username,
+                        iconURL: interaction.member.user.avatarURL()
+                    })
+                    await interaction.editReply({ embeds: [embed] })
+                }
 
                 const id = interaction.options.getString('id')
                 try {
