@@ -187,7 +187,7 @@ export default class ready extends Event {
                             })
                             .setTimestamp()
                             //@ts-ignore
-                            client.channels.cache.get('1139443223371190354').send({ embeds: [embed] })
+                            client.channels.cache.get('1142553350836068362').send({ embeds: [embed] })
                         }
                     })
                 })
