@@ -38,14 +38,8 @@ export async function loadCommand(client: any, path: string) {
     for (let file of eventFiles) {
         const cmd = await import(`../commands/${file}`)
         const command = new cmd.default(client)
-        if (command.help.owner){
-            ownerCommands.push(command.help)
-        } else {
-            commands.push(command.help)
-        }
+        commands.push(command.help)
     }
-
-    // await registerCommands(ownerCommands, '1122947672765112361')
 }
 
 export async function loadNCommand(client: any, path: string) {
