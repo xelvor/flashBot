@@ -19,6 +19,14 @@ export default class GuildMemberRemoveEvent extends Event {
                         parent: joinedChannel.parent
                     });
                     
+                    channel.createOverwrite(user, {
+                        CONNECT: true,
+                        SPEAK: true,
+                        MUTE: true,
+                        DEAF: true,
+                    })
+                    
+                    user.voice.setChannel(channel.id);
                 }
             },
         });
