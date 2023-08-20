@@ -8,6 +8,7 @@ const userSchema = new Schema<IGuild>({
     data: { type: Array<Object>, required: true },
     owner: { type: String, required: true },
     invite: { type: String, required: true },
+    premium: { type: Boolean, required: false },
 })
 
 export const Guild = model<IGuild>('Guilds', userSchema);
