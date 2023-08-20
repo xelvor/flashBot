@@ -37,6 +37,8 @@ export default class adminrole extends Command {
                 })
                 .setTimestamp()
                 await interaction.reply({ embeds: [embed] })
+
+                
                 //@ts-ignore
                 if (interaction.member.permissions.has(PermissionFlagsBits.BanMembers)) {
                     const member = interaction.options.getUser('user')
