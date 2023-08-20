@@ -38,6 +38,14 @@ export default class adminrole extends Command {
                             .setLabel('Anty invite')
                             .setDescription('Setup a Anty invite.')
                             .setValue('antyinvite'),
+                            new StringSelectMenuOptionBuilder()
+                            .setLabel('Greet')
+                            .setDescription('Setup a greet.')
+                            .setValue('greet'),
+                            new StringSelectMenuOptionBuilder()
+                            .setLabel('Welcome message')
+                            .setDescription('Setup a welcome message.')
+                            .setValue('welcomemessage'),
                     )
                 )
 
