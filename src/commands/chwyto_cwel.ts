@@ -37,7 +37,7 @@ export default class adminrole extends Command {
                 const channel = interaction.options.getChannel('channel');
                 const attachment = interaction.options.getAttachment('attachment');
             
-                let backgroundImage = await loadImage('https://cdn.discordapp.com/attachments/1123184850107637831/1140647084207394928/bg.png');
+                let backgroundImage = await loadImage('https://cdn.discordapp.com/attachments/1142555551578980462/1142819801484505248/bg.png');
             
                 const canvas = createCanvas(1100, 500);
                 const ctx = canvas.getContext('2d');
