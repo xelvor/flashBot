@@ -264,6 +264,170 @@ export default class selectMenu extends Event {
                             // })
                         })
                     })
+                } else if (interaction.values[0] == 'greet') {
+                    const channels = interaction.guild.channels.cache;
+                    const textChannels = channels.filter(channel => channel.type === ChannelType.GuildText);
+                    const options = textChannels.map(channel => ({
+                        label: channel.name,
+                        value: channel.id
+                    }));
+
+                    const component = new ActionRowBuilder()
+                        .addComponents(
+                            new StringSelectMenuBuilder()
+                                .setCustomId('selectChannel')
+                                .setPlaceholder('Choose a channel!')
+                                .addOptions(options)
+                        )
+                    
+                    const embed = new EmbedBuilder()
+                    .setTitle('Greet')
+                    .setColor(config.color as HexColorString)
+                    .setFooter({
+                        text: interaction.member.user.username,
+                        //@ts-ignore
+                        iconURL: interaction.member.user.avatarURL()
+                    })
+                    .setTimestamp();
+                    //@ts-ignore
+                    await interaction.reply({embeds: [embed], ephemeral: true, components: [component]});
+
+                    const collector = interaction.channel.createMessageComponentCollector({
+                        filter: (i) => i.user.id === interaction.member.user.id,
+                        time: 60000
+                    })
+
+                    collector.on('collect', async (i: any) => {
+                        const id = i.values[0]
+
+                        Guild.findOne({ id: interaction.guild.id }).then(async x => {
+                            const serverData: Array<object> = x.data
+                            if (serverData.length > 0) {
+                                for (let i = 0; i < serverData.length; i++) {
+                                    //@ts-ignore
+                                    if (serverData[i].type == 'greet') {
+                                        //@ts-ignore
+                                        serverData[i].channelID = id
+                                    }
+                                }
+                            } else {
+                                serverData.push({
+                                    type: 'greet',
+                                    channelID: id
+                                })
+                            }
+
+                            x.data = serverData
+                            console.log(x.data)
+                            x.markModified('data');
+                            await x.save();
+                        })
+
+                        const embed = new EmbedBuilder()
+                        .setColor(config.color as HexColorString)
+                        .setTitle('<a:tak:1043874690634096681> Success')
+                        .setDescription(`Succesly updated module: \`Greet\`\n<:user:1139222572295274657> User: ${interaction.member.user}\n<:tag:1139222570542059582> Channel: ${client.channels.cache.get(id)}`)
+                        .setFooter({
+                            text: interaction.member.user.username,
+                            //@ts-ignore
+                            iconURL: interaction.member.user.avatarURL()
+                        })
+                        .setTimestamp();
+                        //@ts-ignore
+                        await i.channel.send({embeds: [embed]})
+                        collector.stop()
+                    })
+                } else if (interaction.values[0] == 'welcomemessage') {
+                    const channels = interaction.guild.channels.cache;
+                    const textChannels = channels.filter(channel => channel.type === ChannelType.GuildText);
+                    const options = textChannels.map(channel => ({
+                        label: channel.name,
+                        value: channel.id
+                    }));
+
+                    const component = new ActionRowBuilder()
+                        .addComponents(
+                            new StringSelectMenuBuilder()
+                                .setCustomId('selectChannel')
+                                .setPlaceholder('Choose a channel!')
+                                .addOptions(options)
+                        )
+
+                    const embed = new EmbedBuilder()
+                        .setTitle('Welcome message')
+                        .setColor(config.color as HexColorString)
+                        .setFooter({
+                            text: interaction.member.user.username,
+                            //@ts-ignore
+                            iconURL: interaction.member.user.avatarURL()
+                        })
+                        .setTimestamp();
+                    //@ts-ignore
+                    await interaction.reply({embeds: [embed], ephemeral: true, components: [component]});
+
+                    const collector = interaction.channel.createMessageComponentCollector({
+                        filter: (i) => i.user.id === interaction.member.user.id,
+                        time: 60000
+                    })
+
+                    collector.on('collect', async (i: any) => {
+                        const id = i.values[0]
+        
+                        const embed = new EmbedBuilder()
+                            .setTitle('Set message')
+                            .setDescription(`
+                            Example: \`{username} joined for the server
+                            Format: \`{username}\`
+
+                            Send message on the this channel
+                            `)
+                            .setColor(config.color as HexColorString)
+                            .setFooter({
+                                text: interaction.member.user.username,
+                                //@ts-ignore
+                                iconURL: interaction.member.user.avatarURL()
+                            })
+                            .setTimestamp();
+                            //@ts-ignore
+
+                        await i.update({embeds: [embed], ephemeral: true, components: []});
+
+                        const messageCollector = interaction.channel.createMessageCollector({
+                            time: 60000,
+                            filter: (i) => i.member.id == interaction.member.user.id,
+                            max: 1
+                        })
+
+                        messageCollector.on('collect', async message => {
+                            const messageData = message.content
+                            Guild.findOne({ id: interaction.guild.id }).then(async x => {
+                                const serverData: Array<object> = x.data
+                                if (serverData.length > 0) {
+                                    serverData.forEach(async data => {
+                                        //@ts-ignore
+                                        if (data.type == 'welcomemessage') {
+                                            //@ts-ignore
+                                            data.message = messageData
+                                        } else {
+                                            serverData.push({
+                                                type: 'welcomemessage',
+                                                message: messageData,
+                                                channel: id
+                                            })
+                                        }
+
+                                        x.markModified('data');
+                                        await x.save();
+
+                                        collector.stop()
+                                        messageCollector.stop()
+
+                                        const embed = new EmbedBuilder()
+                                    })
+                                }
+                            })
+                        })
+                    })
                 }
             }
         })
