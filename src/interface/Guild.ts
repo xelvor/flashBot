@@ -4,4 +4,5 @@ export interface IGuild {
     data: Array<object>;
     owner: string;
     invite: string;
+    premium: boolean;
 }
