@@ -80,39 +80,39 @@ Make sure you have the following installed:
 ## 📋 Commands List
 
 ### 🛠️ Moderation
-- `!ban <@user> <reason>` - Bans a user from the server.
-- `!unban <userID>` - Unbans a user by ID.
-- `!nuke` - Deletes and recreates a channel.
-- `!clear <number>` - Deletes the specified number of messages.
+- `/ban <@user> <reason>` - Bans a user from the server.
+- `/unban <userID>` - Unbans a user by ID.
+- `/nuke` - Deletes and recreates a channel.
+- `/clear <number>` - Deletes the specified number of messages.
 
 ### 🎉 Fun
-- `!ask-gpt <question>` - Ask GPT for an AI-powered response.
-- `!avatar <@user> [type]` - Displays a user's avatar with optional customization (e.g., circle).
-- `!jokes` - Fetches a random joke.
+- `/ask-gpt <question>` - Ask GPT for an AI-powered response.
+- `/avatar <@user> [type]` - Displays a user's avatar with optional customization (e.g., circle).
+- `/jokes` - Fetches a random joke.
 
 ### 💰 Economy
-- `!money` - Check your money balance.
-- `!balance <@user> <type> <add/remove> <amount>` - Manage user balances.
-- `!setup` - Configure the server's economy system.
+- `/money` - Check your money balance.
+- `/balance <@user> <type> <add/remove> <amount>` - Manage user balances.
+- `/setup` - Configure the server's economy system.
 
 ### 🔊 Music
-- `!play youtube <video>` - Play a YouTube video.
-- `!play spotify` - Play a song from your Spotify status.
-- `!skip` - Skips the current song.
-- `!stop` - Stops music playback.
+- `/play youtube <video>` - Play a YouTube video.
+- `/play spotify` - Play a song from your Spotify status.
+- `/skip` - Skips the current song.
+- `/stop` - Stops music playback.
 
 ### 📋 Information
-- `!info` - Displays bot stats like memory usage, CPU, and uptime.
-- `!profile [@user]` - Displays user information and badges.
-- `!gamestatus <game> <IP> <port>` - Fetches the status of a game server.
+- `/info` - Displays bot stats like memory usage, CPU, and uptime.
+- `/profile [@user]` - Displays user information and badges.
+- `/gamestatus <game> <IP> <port>` - Fetches the status of a game server.
 
 ### ✨ Customization
-- `!badge <@user> <badge>` - Assign custom badges to users.
-- `!poll <text> [options]` - Create a poll with multiple options.
+- `/badge <@user> <badge>` - Assign custom badges to users.
+- `/poll <text> [options]` - Create a poll with multiple options.
 
 ### 📈 Server Utilities
-- `!invites [@user]` - Check invite stats for a user.
-- `!ping` - Checks the bot's response time.
+- `/invites [@user]` - Check invite stats for a user.
+- `/ping` - Checks the bot's response time.
 
 ---
 
